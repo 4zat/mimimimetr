@@ -1,7 +1,9 @@
 package com.example.mimimimetr.converter;
 
 import com.example.mimimimetr.domain.Cat;
+import com.example.mimimimetr.domain.User;
 import com.example.mimimimetr.dto.CatDto;
+import com.example.mimimimetr.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 
@@ -14,7 +16,6 @@ public class DtoConverter {
         dto.setCatName(entity.getCatName());
         dto.setCatPoint(entity.getCatPoint());
         dto.setFilename(entity.getFilename());
-        dto.setBufVoice(entity.isBufVoice());
 
         return dto;
     }
@@ -25,7 +26,26 @@ public class DtoConverter {
         entity.setCatName(dto.getCatName());
         entity.setCatPoint(dto.getCatPoint());
         entity.setFilename(dto.getFilename());
-        entity.setBufVoice(dto.isBufVoice());
+
+        return entity;
+    }
+
+    public UserDto convertUserToDto(User entity) {
+        UserDto dto = new UserDto();
+        dto.setUserId(entity.getUserId());
+        dto.setUserName(entity.getUserName());
+        dto.setPassword(entity.getPassword());
+        dto.setChoice(entity.isChoice());
+
+        return dto;
+    }
+
+    public User convertDtoToUser(UserDto dto) {
+        User entity = new User();
+        entity.setUserId(dto.getUserId());
+        entity.setUserName(dto.getUserName());
+        entity.setPassword(dto.getPassword());
+        entity.setChoice(dto.isChoice());
 
         return entity;
     }

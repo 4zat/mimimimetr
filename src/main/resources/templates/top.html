@@ -27,8 +27,8 @@
                         <a class="nav-link" href="/vote">Vote</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <a class="btn btn-primary" th:href="@{/logout}" role="button">Logout</a>
+                <form class="d-flex" th:action="@{/logout}" method="post">
+                    <input class="btn btn-primary" type="submit" value="Sing Out" role="button"/>
                 </form>
             </div>
         </div>

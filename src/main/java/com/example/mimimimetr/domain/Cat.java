@@ -21,5 +21,4 @@ public class Cat {
     private int catPoint;
 
     private String filename;
-    private boolean bufVoice;
 }

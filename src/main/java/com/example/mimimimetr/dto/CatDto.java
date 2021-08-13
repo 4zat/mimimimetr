@@ -17,5 +17,4 @@ public class CatDto implements Serializable {
     private String catName;
     private int catPoint;
     private String filename;
-    private boolean bufVoice;
 }

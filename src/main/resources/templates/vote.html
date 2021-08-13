@@ -27,8 +27,8 @@
                             <a class="nav-link" href="/vote">Vote</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <a class="btn btn-primary" th:href="@{/logout}" role="button">Logout</a>
+                    <form class="d-flex" th:action="@{/logout}" method="post">
+                        <input class="btn btn-primary" type="submit" value="Sing Out" role="button"/>
                     </form>
                 </div>
             </div>
@@ -38,10 +38,12 @@
         <br>
     <br>
     <div>
-        <img class="col" th:src="${cat.getFilename()}" style="width:500px;height:300px"/>
-            <a th:href="@{/vote}" th:text="${cat.getCatId()}">Cat</a>
-        <img class="col" th:src="${cat1.getFilename()}" style="width:500px;height:300px"/>
-            <a th:href="@{/vote}" th:text="${cat1.getCatId()}">Cat</a>
+        <form th:action="@{/vote}" method="post">
+            <img class="col" th:src="${cat.getFilename()}" style="width:500px;height:300px"/>
+            <input type="submit" name="id" th:value="${cat.getCatId()}">
+            <img class="col" th:src="${cat1.getFilename()}" style="width:500px;height:300px"/>
+            <input type="submit" name="id" th:value="${cat1.getCatId()}">
+        </form>
     </div>
 </div>
 
