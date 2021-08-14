@@ -26,4 +26,8 @@ public class CatServiceIMPL implements CatService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void pointCounter(int id, int point) {
+        catRepository.pointCounter(id, point);
+    }
 }

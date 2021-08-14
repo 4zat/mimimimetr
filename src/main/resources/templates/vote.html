@@ -39,10 +39,14 @@
     <br>
     <div>
         <form th:action="@{/vote}" method="post">
-            <img class="col" th:src="${cat.getFilename()}" style="width:500px;height:300px"/>
-            <input type="submit" name="id" th:value="${cat.getCatId()}">
-            <img class="col" th:src="${cat1.getFilename()}" style="width:500px;height:300px"/>
-            <input type="submit" name="id" th:value="${cat1.getCatId()}">
+            <div class="container">
+                <img class="col" th:src="${cat.getFilename()}" style="width:500px;height:300px"/>
+                <button type="submit" name="id" th:value="${cat.getCatId()}"><h4 th:text="${cat.getCatName()}"></h4></button>
+            </div>
+            <div class="container">
+                <img class="col" th:src="${cat1.getFilename()}" style="width:500px;height:300px"/>
+                <button type="submit" name="id" th:value="${cat1.getCatId()}"><h4 th:text="${cat1.getCatName()}"></h4></button>
+            </div>
         </form>
     </div>
 </div>

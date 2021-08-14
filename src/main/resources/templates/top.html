@@ -35,6 +35,8 @@
     </nav>
     </div>
         <br>
+        <br>
+        <br>
     <div class="row">
     <h3 style="margin: auto; text-align: center">Top 10</h3>
             <div class="row" th:each="cat : ${catList}">
@@ -45,7 +47,7 @@
                 <h5 class="row" th:text="${cat.getCatName()}"></h5>
                 </div>
                 <div class="col">
-                <h4 class="row" style="margin: auto; text-align: center" th:text="${cat.getCatId()}"></h4>
+                <h4 class="row" style="margin: auto; text-align: center" th:text="${catList.indexOf(cat) + 1}"></h4>
                 </div>
             </div>
     </div>

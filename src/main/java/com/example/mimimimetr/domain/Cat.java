@@ -19,6 +19,5 @@ public class Cat {
 
     private String catName;
     private int catPoint;
-
     private String filename;
 }

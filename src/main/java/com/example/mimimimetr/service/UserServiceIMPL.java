@@ -1,6 +1,7 @@
 package com.example.mimimimetr.service;
 
 import com.example.mimimimetr.converter.DtoConverter;
+import com.example.mimimimetr.domain.User;
 import com.example.mimimimetr.dto.UserDto;
 import com.example.mimimimetr.repo.UserRepository;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,18 @@ public class UserServiceIMPL implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public User findByUserName(String username) {
+        return userRepository.findByUserName(username);
+    }
+
+    @Override
+    public void findUsersByChoice(String username) {
+        userRepository.findUsersByChoice(username);
+    }
+
+    @Override
+    public boolean findUsersByCheckChoice(String username) {
+        return userRepository.findUsersByCheckChoice(username);
+    }
 }

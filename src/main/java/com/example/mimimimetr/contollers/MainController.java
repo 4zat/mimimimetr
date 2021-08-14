@@ -1,10 +1,12 @@
 package com.example.mimimimetr.contollers;
 
 
+import com.example.mimimimetr.domain.User;
 import com.example.mimimimetr.dto.CatDto;
 import com.example.mimimimetr.dto.CatsListDTO;
-import com.example.mimimimetr.repo.CatRepository;
 import com.example.mimimimetr.service.CatService;
+import com.example.mimimimetr.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,21 +17,27 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
 
     private final CatService catService;
-    private final CatRepository catRepository;
+    private final UserService userService;
 
-    public MainController(CatService catService, CatRepository catRepository) {
+    public MainController(CatService catService, UserService userService) {
         this.catService = catService;
-        this.catRepository = catRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/index")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/end")
+    public String end() {
+        return "end";
     }
 
     @GetMapping("/top")
@@ -45,10 +53,7 @@ public class MainController {
     }
 
     @GetMapping("/vote")
-    public String vote(Model model, HttpSession session,
-                       @RequestParam(name = "id", required = false) String id) {
-
-
+    public String vote(Model model, HttpSession session, User user) {
 
         CatsListDTO catList = new CatsListDTO();
 
@@ -69,18 +74,22 @@ public class MainController {
             session.removeAttribute("cats");
             catList.setCats(catService.findAll());
             Collections.shuffle(catList.getCats());
+            userService.findUsersByChoice(SecurityContextHolder.getContext().getAuthentication().getName());
             return "redirect:top";
         }
 
+        if (userService.findUsersByCheckChoice(SecurityContextHolder.getContext().getAuthentication().getName()))
+            return "redirect:end";
+
         if (catList.getCats().size() > 0) {
             catDto = catList.getCats().get(0);
-            System.out.println(id);
             catList.getCats().remove(0);
         }
         if (catList.getCats().size() > 0) {
             catDto1 = catList.getCats().get(0);
             catList.getCats().remove(0);
         }
+
 
         session.setAttribute("cats", catList);
         model.addAttribute("cat", catDto);
@@ -94,7 +103,8 @@ public class MainController {
 
         List<CatDto> catDtoList = catService.findAll();
 
-        catRepository.pointCounter(id, catDtoList.get(id - 1).getCatPoint() + 1);
+        catService.pointCounter(id, catDtoList.stream().filter(catDto -> catDto.getCatId() == id)
+                .collect(Collectors.toList()).get(0).getCatPoint() + 1);
 
         return "redirect:vote";
     }
