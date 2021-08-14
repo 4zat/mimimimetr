@@ -1,7 +1,6 @@
 package com.example.mimimimetr.contollers;
 
 
-import com.example.mimimimetr.domain.User;
 import com.example.mimimimetr.dto.CatDto;
 import com.example.mimimimetr.dto.CatsListDTO;
 import com.example.mimimimetr.service.CatService;
@@ -53,7 +52,7 @@ public class MainController {
     }
 
     @GetMapping("/vote")
-    public String vote(Model model, HttpSession session, User user) {
+    public String vote(Model model, HttpSession session) {
 
         CatsListDTO catList = new CatsListDTO();
 
@@ -74,11 +73,17 @@ public class MainController {
             session.removeAttribute("cats");
             catList.setCats(catService.findAll());
             Collections.shuffle(catList.getCats());
-            userService.findUsersByChoice(SecurityContextHolder.getContext().getAuthentication().getName());
+            userService.findUsersByChoice(SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getName());
             return "redirect:top";
         }
 
-        if (userService.findUsersByCheckChoice(SecurityContextHolder.getContext().getAuthentication().getName()))
+        if (userService.findUsersByCheckChoice(SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName()))
             return "redirect:end";
 
         if (catList.getCats().size() > 0) {
@@ -99,7 +104,7 @@ public class MainController {
     }
 
     @PostMapping("/vote")
-    public String test(@RequestParam(name = "id", required = false) int id) {
+    public String postVote(@RequestParam(name = "id", required = false) int id) {
 
         List<CatDto> catDtoList = catService.findAll();
 

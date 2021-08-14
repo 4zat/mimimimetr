@@ -8,8 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "select u.userName from User u where u.userName = :username")
-    User findByUserName(@Param("username") String username);
+
+    @Query(value = "select user_name from usr where user_name = :username order by user_name desc limit 1", nativeQuery = true)
+    String findByUserName(@Param("username") String username);
 
     @Transactional
     @Modifying
@@ -18,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select u.choice from User u where u.userName = :username")
     boolean findUsersByCheckChoice(@Param("username") String username);
+
+    @Override
+    <S extends User> S save(S s);
 }

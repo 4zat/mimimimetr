@@ -1,13 +1,11 @@
 package com.example.mimimimetr.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cat_table")
@@ -20,4 +18,36 @@ public class Cat {
     private String catName;
     private int catPoint;
     private String filename;
+
+    public int getCatId() {
+        return catId;
+    }
+
+    public void setCatId(int catId) {
+        this.catId = catId;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
+    }
+
+    public int getCatPoint() {
+        return catPoint;
+    }
+
+    public void setCatPoint(int catPoint) {
+        this.catPoint = catPoint;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 }

@@ -28,7 +28,7 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public User findByUserName(String username) {
+    public String findByUserName(String username) {
         return userRepository.findByUserName(username);
     }
 
@@ -40,5 +40,10 @@ public class UserServiceIMPL implements UserService {
     @Override
     public boolean findUsersByCheckChoice(String username) {
         return userRepository.findUsersByCheckChoice(username);
+    }
+
+    @Override
+    public <S extends User> S save(S s) {
+        return userRepository.save(s);
     }
 }
