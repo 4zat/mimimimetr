@@ -27,6 +27,11 @@ public class MainController {
         this.catRepository = catRepository;
     }
 
+    @GetMapping("/index")
+    public String index() {
+        return "index";
+    }
+
     @GetMapping("/top")
     public String topCats(Model model) {
         List<CatDto> list = catService.findAll();
@@ -37,11 +42,6 @@ public class MainController {
         model.addAttribute("catList", list);
 
         return "top";
-    }
-
-    @GetMapping("/index")
-    public String index() {
-        return "index";
     }
 
     @GetMapping("/vote")
@@ -98,9 +98,5 @@ public class MainController {
 
         return "redirect:vote";
     }
-
-
-//    @GetMapping(value = "{/logout}")
-
 
 }

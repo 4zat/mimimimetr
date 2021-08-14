@@ -1,5 +1,6 @@
 package com.example.mimimimetr.config;
 
+import com.example.mimimimetr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,17 +19,23 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("admin")
-//                .password(passwordEncoder().encode("123")).roles("ADMIN");
-//    }
+    public WebSecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select u.user_name, u.password, u.active from usr u where u.user_name=?")
+                .authoritiesByUsernameQuery(
+                        "SELECT user_name, 'ROLE_USER' FROM usr WHERE user_name=?")
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,17 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select user_name, password from usr where user_name=?");
-    }
+    //    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("admin")
+//                .password(passwordEncoder().encode("123")).roles("ADMIN");
+//    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 }

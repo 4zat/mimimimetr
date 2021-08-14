@@ -25,4 +25,5 @@ public class UserServiceIMPL implements UserService {
                 .map(dtoConverter::convertUserToDto)
                 .collect(Collectors.toList());
     }
+
 }

@@ -23,6 +23,8 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(User user) {
 
+
+        user.setActive(true);
         System.out.println(user.getUserName());
         System.out.println(user.getPassword());
 

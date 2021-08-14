@@ -36,6 +36,7 @@ public class DtoConverter {
         dto.setUserName(entity.getUserName());
         dto.setPassword(entity.getPassword());
         dto.setChoice(entity.isChoice());
+        dto.setActive(entity.isActive());
 
         return dto;
     }
@@ -46,6 +47,7 @@ public class DtoConverter {
         entity.setUserName(dto.getUserName());
         entity.setPassword(dto.getPassword());
         entity.setChoice(dto.isChoice());
+        entity.setActive(dto.isActive());
 
         return entity;
     }
