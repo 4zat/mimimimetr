@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,14 +54,12 @@ public class MainController {
     public String vote(Model model, HttpSession session) {
 
         CatsListDTO catList = new CatsListDTO();
+        ControllerUtils controllerUtils = new ControllerUtils();
 
         CatDto catDto = new CatDto();
         CatDto catDto1 = new CatDto();
 
-        if (catList.getCats() == null) {
-            catList.setCats(catService.findAll());
-            Collections.shuffle(catList.getCats());
-        }
+        controllerUtils.addCat(catList, catService);
 
         if (session.getAttribute("cats") instanceof CatsListDTO)
             if (session.getAttribute("cats") != null)
@@ -70,14 +67,8 @@ public class MainController {
 
 
         if (catList.getCats().size() == 0) {
-            session.removeAttribute("cats");
-            catList.setCats(catService.findAll());
-            Collections.shuffle(catList.getCats());
-            userService.findUsersByChoice(SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
-                    .getName());
-            return "redirect:top";
+            controllerUtils.updateChoice(session, userService);
+            return "redirect:end";
         }
 
         if (userService.findUsersByCheckChoice(SecurityContextHolder
@@ -86,15 +77,8 @@ public class MainController {
                 .getName()))
             return "redirect:end";
 
-        if (catList.getCats().size() > 0) {
-            catDto = catList.getCats().get(0);
-            catList.getCats().remove(0);
-        }
-        if (catList.getCats().size() > 0) {
-            catDto1 = catList.getCats().get(0);
-            catList.getCats().remove(0);
-        }
-
+        catDto = controllerUtils.catAddAndRemove(catList, catDto);
+        catDto1 = controllerUtils.catAddAndRemove(catList, catDto1);
 
         session.setAttribute("cats", catList);
         model.addAttribute("cat", catDto);

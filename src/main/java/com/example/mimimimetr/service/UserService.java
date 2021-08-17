@@ -11,7 +11,7 @@ public interface UserService {
 
     String findByUserName(String username);
 
-    void findUsersByChoice(String username);
+    void updateUsersByChoice(String username);
 
     boolean findUsersByCheckChoice(String username);
 

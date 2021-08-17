@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     @Query(value = "update User u set u.choice = true where u.userName = :username")
-    void findUsersByChoice(@Param("username") String username);
+    void updateUsersByChoice(@Param("username") String username);
 
     @Query(value = "select u.choice from User u where u.userName = :username")
     boolean findUsersByCheckChoice(@Param("username") String username);

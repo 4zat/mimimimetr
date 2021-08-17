@@ -33,8 +33,8 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public void findUsersByChoice(String username) {
-        userRepository.findUsersByChoice(username);
+    public void updateUsersByChoice(String username) {
+        userRepository.updateUsersByChoice(username);
     }
 
     @Override
