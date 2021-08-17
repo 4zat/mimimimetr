@@ -40,12 +40,8 @@ public class MainController {
 
     @GetMapping("/top")
     public String topCats(Model model) {
-        List<CatDto> list = catService.findAll();
-
-        Comparator<CatDto> comp = Comparator.comparing(CatDto::getCatPoint);
-        list.sort(comp.reversed());
-
-        model.addAttribute("catList", list);
+        ControllerUtils controllerUtils = new ControllerUtils();
+        model.addAttribute("catList", controllerUtils.sortCats(catService.findAll()));
 
         return "top";
     }
@@ -53,8 +49,8 @@ public class MainController {
     @GetMapping("/vote")
     public String vote(Model model, HttpSession session) {
 
-        CatsListDTO catList = new CatsListDTO();
         ControllerUtils controllerUtils = new ControllerUtils();
+        CatsListDTO catList = new CatsListDTO();
 
         CatDto catDto = new CatDto();
         CatDto catDto1 = new CatDto();

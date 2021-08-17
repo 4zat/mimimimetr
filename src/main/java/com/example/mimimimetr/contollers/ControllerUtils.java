@@ -8,8 +8,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class ControllerUtils {
+
+    public List<CatDto> sortCats(List<CatDto> catDtoList) {
+        Comparator<CatDto> comp = Comparator.comparing(CatDto::getCatPoint);
+        catDtoList.sort(comp.reversed());
+
+        return catDtoList;
+    }
 
     public void addCat(CatsListDTO catsListDTO, CatService catService) {
         if (catsListDTO.getCats() == null) {
