@@ -102,6 +102,13 @@
 			<version>2.5.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>7.14.0</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
